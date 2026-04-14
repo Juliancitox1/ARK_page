@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARK</title>
+    <meta name="theme-color" content="#050308" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Qwitcher+Grypen:wght@400;700&display=swap"
+        rel="stylesheet"
+    />
+
+    <link rel="preload" as="image" href="Images/ImagenFondo.webp">
+
+    <link rel="stylesheet" href="StyleHome.css" />
+</head>
+<body>
+    <header class="site-header" id="siteHeader">
+        <nav class="nav">
+            <div class="nav-links nav-links-left">
+                <a href="#inicio" class="nav-link active">Inicio</a>
+                <a href="#armario" class="nav-link">Armario</a>
+            </div>
+
+            <a href="#inicio" class="nav-logo" aria-label="Ir al inicio">
+                <img src="Images/Logo.png" alt="Logo ARK" />
+            </a>
+
+            <div class="nav-links nav-links-right">
+                <a href="#nosotros" class="nav-link">Nosotros</a>
+                <a href="#contacto" class="nav-link">Contáctanos</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="inicio">
+            <img src="Images/LogoFondo.png" alt="" class="hero-decor" />
+
+            <div class="hero-content">
+                <h1 class="hero-title">Ark</h1>
+                <a href="#armario" class="hero-button">Armario</a>
+            </div>
+        </section>
+
+        <section class="armario-section" id="armario">
+            <div class="section-heading">
+                <span class="eyebrow">ARK</span>
+                <h2>Armario</h2>
+                <p>Encuentra tu estilo con la mejor calidad y al mejor precio</p>
+            </div>
+
+            <div class="carousel-shell">
+                <button class="carousel-arrow carousel-arrow-left" id="flechaIzquierda" aria-label="Ver productos anteriores">
+                    &#10094;
+                </button>
+
+                <div class="carousel-track" id="filaropa"></div>
+
+                <button class="carousel-arrow carousel-arrow-right" id="flechaDerecha" aria-label="Ver más productos">
+                    &#10095;
+                </button>
+            </div>
+
+            <div class="armario-actions">
+                <button class="view-all-button" id="toggleArmario">Ver Todo</button>
+            </div>
+
+            <div class="armario-modal" id="armarioCompleto" aria-hidden="true">
+                <div class="armario-backdrop" data-close-armario></div>
+
+                <div class="armario-panel" role="dialog" aria-modal="true" aria-labelledby="armarioTitulo">
+                    <button class="armario-close" id="cerrarArmario" aria-label="Cerrar armario">
+                        &times;
+                    </button>
+
+                    <div class="armario-panel-header">
+                        <span class="eyebrow">ARK</span>
+                        <h3 id="armarioTitulo">Armario completo</h3>
+                    </div>
+
+                    <div class="all-products-grid armario-grid" id="ropaCompleta"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="nosotros-section" id="nosotros">
+            <div class="nosotros-copy">
+                <span class="eyebrow">Nosotros</span>
+                <h2>Vestimos presencia, carácter y una identidad que no pide permiso.</h2>
+                <p>
+                    ARK nace como una propuesta visual para quienes entienden la ropa como una
+                    extensión de su energía. No buscamos llenar espacios; buscamos construir una
+                    imagen que se sienta firme, estética y distinta desde el primer vistazo.
+                </p>
+                <p>
+                    Cada prenda está pensada para transmitir una vibra más artística, más oscura y
+                    más exclusiva. La intención no es seguir una línea genérica, sino proyectar una
+                    identidad con lenguaje propio.
+                </p>
+
+                <div class="brand-quote">
+                    <span>Exclusividad convertida en forma.</span>
+                </div>
+            </div>
+
+            <div class="nosotros-visual">
+                <article class="visual-card visual-card-large">
+                    <img src="Images/D1_BlancoMorado.png" alt="Producto destacado ARK" />
+                </article>
+                <article class="visual-card visual-card-small">
+                    <img src="Images/D2_BlancoMorado.png" alt="Producto secundario ARK" />
+                </article>
+            </div>
+        </section>
+
+        <section class="contacto-section" id="contacto">
+            <div class="section-heading section-heading-contacto">
+                <span class="eyebrow">Contáctanos</span>
+                <h2>Conecta con ARK</h2>
+                <p>Déjalo simple, directo y visible.</p>
+            </div>
+
+            <div class="contact-grid">
+                <article class="contact-card">
+                    <span class="contact-label">Celular 1</span>
+                    <a href="tel:+573242626679" class="contact-value">+57 324 262 6679</a>
+                </article>
+
+                <article class="contact-card">
+                    <span class="contact-label">Celular 2</span>
+                    <a href="tel:+573242626679" class="contact-value">+57 324 262 6679</a>
+                </article>
+
+                <article class="contact-card">
+                    <span class="contact-label">Instagram</span>
+                    <a href="https://instagram.com/_julian_cito" target="_blank" rel="noopener noreferrer" class="contact-value">
+                        @_julian_cito
+                    </a>
+                </article>
+
+                <article class="contact-card">
+                    <span class="contact-label">TikTok</span>
+                    <a href="https://tiktok.com/@_julian_cito" target="_blank" rel="noopener noreferrer" class="contact-value">
+                        @_julian_cito
+                    </a>
+                </article>
+
+                <article class="contact-card contact-card-wide">
+                    <span class="contact-label">Horario</span>
+                    <span class="contact-value">Todos los días / Todas horas</span>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-brand">
+            <a href="#inicio" class="footer-logo-link" aria-label="Volver al inicio">
+                <img src="Images/Logo.png" alt="Logo ARK" class="footer-logo" />
+            </a>
+            <h3>ARK</h3>
+            <p>Exclusividad convertida en forma.</p>
+        </div>
+
+        <div class="footer-nav">
+            <a href="#inicio">Inicio</a>
+            <a href="#armario">Armario</a>
+            <a href="#nosotros">Nosotros</a>
+            <a href="#contacto">Contáctanos</a>
+        </div>
+
+        <p class="footer-copy">© <span id="currentYear"></span> ARK. Todos los derechos reservados.</p>
+    </footer>
+
+    <div class="product-modal" id="productModal" aria-hidden="true">
+        <div class="product-backdrop" data-close-modal></div>
+
+        <div class="product-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="modal-close" id="cerrarProducto" aria-label="Cerrar ventana">
+                &times;
+            </button>
+
+            <div class="product-layout">
+                <div class="product-gallery">
+                    <div class="product-main-frame">
+                        <button class="gallery-arrow gallery-arrow-left" id="modalPrevImage" aria-label="Imagen anterior">
+                            &#10094;
+                        </button>
+
+                        <img id="imagenPrincipal" class="product-main-image" src="" alt="" />
+
+                        <button class="gallery-arrow gallery-arrow-right" id="modalNextImage" aria-label="Imagen siguiente">
+                            &#10095;
+                        </button>
+                    </div>
+
+                    <div class="thumb-strip" id="miniaturas"></div>
+                </div>
+
+                <div class="product-info">
+                    <span class="eyebrow">Detalle</span>
+                    <h3 id="modalTitle">Producto</h3>
+                    <p class="modal-description" id="descripcionProducto"></p>
+                    <p class="modal-price" id="precioProducto"></p>
+
+                    <div class="selector-block">
+                        <p>Colores</p>
+                        <div class="option-row option-row-colors" id="selectorColores"></div>
+                    </div>
+
+                    <div class="selector-block">
+                        <p>Tallas</p>
+                        <div class="option-row option-row-sizes" id="selectorTallas"></div>
+                    </div>
+
+                    <a id="linkWhatsapp" href="#" target="_blank" rel="noopener noreferrer" class="whatsapp-button">
+                        Solicitar por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="FunctionalityHome.js"></script>
+</body>
+</html>
