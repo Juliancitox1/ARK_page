@@ -124,15 +124,20 @@ const nextImageButton = document.getElementById("modalNextImage");
 const colorsContainer = document.getElementById("selectorColores");
 const sizesContainer = document.getElementById("selectorTallas");
 const whatsappLink = document.getElementById("linkWhatsapp");
+const relatedProductsTrack = document.getElementById("relatedProductsTrack");
+const relatedPrevButton = document.getElementById("relatedPrev");
+const relatedNextButton = document.getElementById("relatedNext");
+const scrollToRelatedButton = document.getElementById("scrollToRelated");
 
 document.getElementById("currentYear").textContent = new Date().getFullYear();
 
 let autoScrollInterval = null;
+let relatedHoverScrollInterval = null;
 let currentProductId = null;
 let currentColorName = "";
 let currentSize = "";
 let currentImageIndex = 0;
-
+let productOpenedFromArmario = false;
 
 function getFirstEnabledColor(product) {
     const availableColor = Object.entries(product.colors).find(([, color]) => color.enabled !== false);
@@ -162,11 +167,81 @@ function createCardMarkup(productId) {
     `;
 }
 
+function createRelatedCardMarkup(productId) {
+    const product = products[productId];
+    const image = getPrimaryImage(product);
+
+    return `
+        <article class="related-card" data-related-product-id="${productId}">
+            <div class="related-card-media">
+                <img src="${image}" alt="${product.name}" loading="lazy" />
+            </div>
+
+            <div class="related-card-info">
+                <span class="related-card-name">${product.name}</span>
+                <span class="related-card-price">${product.price}</span>
+            </div>
+        </article>
+    `;
+}
+
 function renderProducts() {
     const cards = Object.keys(products).map(createCardMarkup).join("");
     carouselTrack.innerHTML = cards;
     ropaCompleta.innerHTML = cards;
     activateReveal();
+}
+
+function renderRelatedProducts() {
+    if (!relatedProductsTrack || !currentProductId) return;
+
+    const relatedCards = Object.keys(products)
+        .filter((productId) => productId !== String(currentProductId))
+        .map(createRelatedCardMarkup)
+        .join("");
+
+    relatedProductsTrack.innerHTML = relatedCards;
+    relatedProductsTrack.scrollTo({ left: 0, behavior: "auto" });
+}
+
+function getRelatedScrollAmount() {
+    const firstCard = relatedProductsTrack.querySelector(".related-card");
+    if (!firstCard) return relatedProductsTrack.clientWidth;
+
+    const trackStyles = window.getComputedStyle(relatedProductsTrack);
+    const gap = parseFloat(trackStyles.gap) || 0;
+    const cardWidth = firstCard.getBoundingClientRect().width;
+
+    return cardWidth + gap;
+}
+
+function moveRelatedProducts(direction) {
+    if (!relatedProductsTrack) return;
+
+    const scrollAmount = getRelatedScrollAmount();
+
+    relatedProductsTrack.scrollBy({
+        left: direction * scrollAmount,
+        behavior: "smooth"
+    });
+}
+
+function startRelatedHoverScroll(direction) {
+    stopRelatedHoverScroll();
+
+    relatedHoverScrollInterval = setInterval(() => {
+        if (!relatedProductsTrack) return;
+
+        relatedProductsTrack.scrollBy({
+            left: direction * 14,
+            behavior: "auto"
+        });
+    }, 16);
+}
+
+function stopRelatedHoverScroll() {
+    clearInterval(relatedHoverScrollInterval);
+    relatedHoverScrollInterval = null;
 }
 
 function getScrollAmount() {
@@ -215,7 +290,7 @@ function moveLeft() {
 
 function startAutoScroll() {
     stopAutoScroll();
-    autoScrollInterval = setInterval(moveRight, 7000);
+    autoScrollInterval = setInterval(moveRight, 10000);
 }
 
 function stopAutoScroll() {
@@ -258,6 +333,7 @@ function getModalImages(product) {
 }
 
 function renderModalGallery(product) {
+    
     const modalImages = getModalImages(product);
     if (!modalImages.length) return;
 
@@ -354,13 +430,16 @@ function renderModal() {
     renderSizeOptions(product);
     renderModalGallery(product);
     updateWhatsAppLink();
+    renderRelatedProducts();
 }
 
-function openProduct(productId) {
+function openProduct(productId, openedFromArmario = false) {
     const product = products[productId];
     if (!product) return;
 
-    if (armarioCompleto.classList.contains("is-open")) {
+    productOpenedFromArmario = openedFromArmario;
+
+    if (armarioCompleto.classList.contains("is-open") && !openedFromArmario) {
         closeArmarioModal();
     }
 
@@ -384,8 +463,16 @@ function openProduct(productId) {
 function closeProduct() {
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("modal-open");
-    startAutoScroll();
+    stopRelatedHoverScroll();
+
+    if (productOpenedFromArmario && armarioCompleto.classList.contains("is-open")) {
+        document.body.classList.add("modal-open");
+    } else {
+        document.body.classList.remove("modal-open");
+        startAutoScroll();
+    }
+
+    productOpenedFromArmario = false;
 }
 
 function handleProductClick(event) {
@@ -393,7 +480,9 @@ function handleProductClick(event) {
     if (!card) return;
 
     const productId = card.dataset.productId;
-    openProduct(productId);
+    const openedFromArmario = Boolean(card.closest("#ropaCompleta"));
+
+    openProduct(productId, openedFromArmario);
 }
 
 function updateHeaderState() {
@@ -441,6 +530,28 @@ function activateReveal() {
 
 rightArrow.addEventListener("click", moveRight);
 leftArrow.addEventListener("click", moveLeft);
+relatedNextButton.addEventListener("click", () => moveRelatedProducts(1));
+relatedPrevButton.addEventListener("click", () => moveRelatedProducts(-1));
+
+relatedNextButton.addEventListener("mouseenter", () => startRelatedHoverScroll(1));
+relatedPrevButton.addEventListener("mouseenter", () => startRelatedHoverScroll(-1));
+
+relatedNextButton.addEventListener("mouseleave", stopRelatedHoverScroll);
+relatedPrevButton.addEventListener("mouseleave", stopRelatedHoverScroll);
+
+relatedNextButton.addEventListener("blur", stopRelatedHoverScroll);
+relatedPrevButton.addEventListener("blur", stopRelatedHoverScroll);
+
+scrollToRelatedButton.addEventListener("click", () => {
+    const relatedSection = document.querySelector(".related-products");
+
+    if (!relatedSection) return;
+
+    relatedSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+});
 
 carouselTrack.addEventListener("mouseenter", stopAutoScroll);
 carouselTrack.addEventListener("mouseleave", startAutoScroll);
@@ -448,6 +559,12 @@ carouselTrack.addEventListener("mouseleave", startAutoScroll);
 carouselTrack.addEventListener("click", handleProductClick);
 ropaCompleta.addEventListener("click", handleProductClick);
 
+relatedProductsTrack.addEventListener("click", (event) => {
+    const card = event.target.closest("[data-related-product-id]");
+    if (!card) return;
+
+    openProduct(card.dataset.relatedProductId, productOpenedFromArmario);
+});
 
 toggleArmarioButton.addEventListener("click", openArmarioModal);
 cerrarArmarioButton.addEventListener("click", closeArmarioModal);
@@ -501,6 +618,7 @@ sizesContainer.addEventListener("click", (event) => {
 thumbnailsContainer.addEventListener("click", (event) => {
     const button = event.target.closest("[data-image-index]");
     if (!button || !currentProductId) return;
+
 
     const product = products[currentProductId];
     const modalImages = getModalImages(product);

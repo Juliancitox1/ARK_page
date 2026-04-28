@@ -121,31 +121,40 @@ section {
     min-height: 100vh;
     display: grid;
     place-items: center;
-    padding: 120px 24px 80px;
+    padding: 128px 24px 88px;
     text-align: center;
     overflow: hidden;
+    isolation: isolate;
 }
 
 .hero-content {
+    position: relative;
+    z-index: 2;
     max-width: 760px;
 }
 
 .hero-decor {
     position: absolute;
-    top: 140px;
-    left: 198px;
-    width: 320px;
+    top: 120px;
+    left: clamp(24px, 13vw, 198px);
+    width: clamp(220px, 24vw, 340px);
     height: auto;
     z-index: 1;
     pointer-events: none;
+    opacity: 0.78;
+    filter: drop-shadow(0 0 26px rgba(183, 148, 255, 0.12));
 }
 
 .hero-title {
-    margin: 0 0 24px;
+    margin: 0 0 30px;
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(4.5rem, 12vw, 8rem);
-    line-height: 0.95;
-    letter-spacing: 0.04em;
+    font-size: clamp(5rem, 13vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 24px rgba(183, 148, 255, 0.14),
+        0 18px 46px rgba(0, 0, 0, 0.42);
 }
 
 .hero-button,
@@ -156,82 +165,108 @@ section {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 13px 24px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.11);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.04) 100%);
     color: var(--text);
     cursor: pointer;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.09em;
-    box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.03) inset,
-        0 10px 24px rgba(0, 0, 0, 0.22);
     transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
-.hero-button::before,
-.view-all-button::before {
+
+.hero-button::before {
     content: "";
     position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 58%;
-    height: 58%;
-    transform: translate(-50%, -50%);
-    border-radius: 999px;
-    background: radial-gradient(circle, rgba(183, 148, 255, 0.38) 0%, rgba(109, 40, 217, 0.16) 42%, rgba(109, 40, 217, 0) 75%);
-    filter: blur(18px);
+    inset: -8px;
+    border-radius: inherit;
+    background:
+        radial-gradient(circle, rgba(183, 148, 255, 0.45), rgba(109, 40, 217, 0.12) 48%, transparent 72%);
+    filter: blur(14px);
     z-index: -2;
-    opacity: 0.78;
-    animation: arcadeGlowSoft 3s ease-in-out infinite;
+    opacity: 0.9;
+    animation: arcadeGlowSoft 2.8s ease-in-out infinite;
     pointer-events: none;
 }
 
-.hero-button::after,
+.hero-button::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border-radius: inherit;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.16), rgba(183, 148, 255, 0.05), rgba(255, 255, 255, 0.12));
+    z-index: -1;
+    opacity: 0.9;
+}
+
+.view-all-button::before {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: inherit;
+    background:
+        radial-gradient(circle, rgba(183, 148, 255, 0.45), rgba(109, 40, 217, 0.12) 48%, transparent 72%);
+    filter: blur(14px);
+    z-index: -2;
+    opacity: 0.9;
+    animation: arcadeGlowSoft 2.8s ease-in-out infinite;
+    pointer-events: none;
+}
+
 .view-all-button::after {
     content: "";
     position: absolute;
-    inset: 1px;
+    inset: 2px;
     border-radius: inherit;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.03) 100%);
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.16), rgba(183, 148, 255, 0.05), rgba(255, 255, 255, 0.12));
     z-index: -1;
+    opacity: 0.9;
 }
 
 .whatsapp-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 14px 24px;
+    width: 100%;
+    margin-top: 32px;
+    padding: 15px 24px;
     border-radius: 999px;
-    background: #25D366;
+    background:
+        linear-gradient(135deg, #25D366, #128C7E);
     color: white;
-    border: none;
-    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    font-weight: 800;
     cursor: pointer;
-    position: relative;
-    top: 50px;
-    left: 190px;
-    transition: transform 0.25s ease, filter 0.25s ease;
-}
-
-.hero-button:hover,
-.view-all-button:hover {
-    transform: translateY(-2px);
-    border-color: rgba(183, 148, 255, 0.24);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.05) 100%);
+    position: static;
+    top: auto;
+    left: auto;
+    letter-spacing: 0.04em;
     box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.03) inset,
-        0 12px 28px rgba(0, 0, 0, 0.24),
-        0 0 14px rgba(183, 148, 255, 0.08);
+        0 14px 30px rgba(18, 140, 126, 0.22),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    transition:
+        transform 0.25s ease,
+        filter 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
-.hero-button:hover::before,
+.view-all-button:hover {
+    transform: translateY(-2px) scale(1.02);
+    border-color: rgba(220, 202, 255, 0.9);
+    background:
+        linear-gradient(135deg, rgba(28, 11, 48, 0.94), rgba(91, 36, 150, 0.68)),
+        rgba(5, 3, 8, 0.78);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.10) inset,
+        0 0 22px rgba(183, 148, 255, 0.42),
+        0 0 48px rgba(109, 40, 217, 0.26),
+        0 16px 34px rgba(0, 0, 0, 0.36);
+}
+
 .view-all-button:hover::before {
-    width: 64%;
-    height: 64%;
-    opacity: 0.9;
-    filter: blur(20px);
+    opacity: 1;
+    filter: blur(17px);
 }
 
 .whatsapp-button:hover {
@@ -285,7 +320,8 @@ section {
 .carousel-shell {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
+    position: relative;
 }
 
 .carousel-track,
@@ -311,17 +347,45 @@ section {
     width: 46px;
     height: 46px;
     border-radius: 50%;
-    background: rgba(8, 6, 12, 0.68);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+        rgba(8, 6, 12, 0.78);
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     flex: 0 0 auto;
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    backdrop-filter: blur(10px);
+    box-shadow:
+        0 12px 26px rgba(0, 0, 0, 0.28),
+        0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+    transition:
+        transform 0.24s ease,
+        border-color 0.24s ease,
+        background 0.24s ease,
+        box-shadow 0.24s ease;
 }
 
 .carousel-arrow:hover,
 .gallery-arrow:hover {
-    background: rgba(255, 255, 255, 0.14);
+    transform: translateY(-1px);
+    border-color: rgba(183, 148, 255, 0.34);
+    background:
+        linear-gradient(180deg, rgba(183, 148, 255, 0.14), rgba(255, 255, 255, 0.04)),
+        rgba(8, 6, 12, 0.86);
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.34),
+        0 0 18px rgba(183, 148, 255, 0.12);
+}
+
+.gallery-arrow:hover {
+    transform: translateY(-50%) scale(1.04);
+    border-color: rgba(183, 148, 255, 0.32);
+    background:
+        linear-gradient(180deg, rgba(183, 148, 255, 0.12), rgba(255, 255, 255, 0.04)),
+        rgba(8, 6, 12, 0.88);
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.34),
+        0 0 16px rgba(183, 148, 255, 0.10);
 }
 
 .armario-actions {
@@ -330,45 +394,139 @@ section {
 }
 
 .hero-button {
-    min-width: 180px;
-    font-size: 0.80rem;
+    min-width: 178px;
+    padding: 13px 26px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(183, 148, 255, 0.62);
+    background:
+        linear-gradient(135deg, rgba(16, 8, 28, 0.88), rgba(54, 22, 92, 0.52)),
+        rgba(5, 3, 8, 0.72);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+        0 0 16px rgba(183, 148, 255, 0.28),
+        0 0 34px rgba(109, 40, 217, 0.18),
+        0 12px 28px rgba(0, 0, 0, 0.32);
+}
+
+.hero-button:hover {
+    transform: translateY(-2px) scale(1.02);
+    border-color: rgba(220, 202, 255, 0.9);
+    background:
+        linear-gradient(135deg, rgba(28, 11, 48, 0.94), rgba(91, 36, 150, 0.68)),
+        rgba(5, 3, 8, 0.78);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.10) inset,
+        0 0 22px rgba(183, 148, 255, 0.42),
+        0 0 48px rgba(109, 40, 217, 0.26),
+        0 16px 34px rgba(0, 0, 0, 0.36);
+}
+
+.hero-button:hover::before {
+    inset: -11px;
+    opacity: 1;
+    filter: blur(17px);
 }
 
 .view-all-button {
-    min-width: 205px;
-    font-size: 0.84rem;
+    min-width: 178px;
+    padding: 13px 26px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(183, 148, 255, 0.62);
+    background:
+        linear-gradient(135deg, rgba(16, 8, 28, 0.88), rgba(54, 22, 92, 0.52)),
+        rgba(5, 3, 8, 0.72);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+        0 0 16px rgba(183, 148, 255, 0.28),
+        0 0 34px rgba(109, 40, 217, 0.18),
+        0 12px 28px rgba(0, 0, 0, 0.32);
 }
 
 .product-card {
+    position: relative;
     flex: 0 0 calc((100% - 48px) / 3);
     min-width: 0;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--line);
-    border-radius: 24px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025)),
+        rgba(8, 6, 12, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.085);
+    border-radius: 26px;
     overflow: hidden;
-    box-shadow: var(--shadow-dark);
+    box-shadow:
+        0 18px 42px rgba(0, 0, 0, 0.30),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
     cursor: pointer;
-    transition: transform 0.25s ease, border-color 0.25s ease;
+    transition:
+        transform 0.28s ease,
+        border-color 0.28s ease,
+        box-shadow 0.28s ease,
+        background 0.28s ease;
+}
+
+.product-card::after {
+    content: "Ver detalle";
+    position: absolute;
+    left: 50%;
+    top: 12px;
+    transform: translate(-50%, -6px);
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: rgba(5, 3, 8, 0.72);
+    color: rgba(245, 241, 232, 0.9);
+    border: 1px solid rgba(183, 148, 255, 0.18);
+    backdrop-filter: blur(8px);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity 0.28s ease,
+        transform 0.28s ease;
+    z-index: 3;
+}
+
+.product-card:hover::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
 }
 
 #filaropa .product-card {
-    border: 1px solid rgba(183, 148, 255, 0.32);
+    border-color: rgba(183, 148, 255, 0.24);
     box-shadow:
-        0 16px 36px rgba(0, 0, 0, 0.28),
-        0 0 14px rgba(109, 40, 217, 0.10);
+        0 18px 42px rgba(0, 0, 0, 0.32),
+        0 0 18px rgba(109, 40, 217, 0.07);
 }
 
 #filaropa .product-card:hover {
-    border-color: rgba(183, 132, 255, 0.52);
+    transform: translateY(-7px);
+    border-color: rgba(183, 148, 255, 0.46);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.028)),
+        rgba(8, 6, 12, 0.92);
     box-shadow:
-        0 16px 34px rgba(0, 0, 0, 0.28),
-        0 0 26px rgba(183, 132, 255, 0.28);
+        0 26px 58px rgba(0, 0, 0, 0.42),
+        0 0 24px rgba(183, 148, 255, 0.14);
+}
+
+.product-card-media {
+    position: relative;
+    overflow: hidden;
 }
 
 .product-card-media img {
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
+    transition:
+        transform 0.45s ease,
+        filter 0.45s ease;
+}
+
+.product-card:hover .product-card-media img {
+    transform: scale(1.035);
+    filter: contrast(1.04) brightness(1.03);
 }
 
 #filaropa .product-card-info,
@@ -378,22 +536,27 @@ section {
     align-items: center;
     gap: 16px;
     padding: 18px 18px 20px;
-    background: linear-gradient(180deg, rgba(8, 6, 12, 0.88) 0%, rgba(4, 3, 8, 0.96) 100%);
+    background:
+        linear-gradient(180deg, rgba(13, 9, 18, 0.94) 0%, rgba(4, 3, 8, 0.98) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.065);
 }
 
 #filaropa .product-card-name,
 #ropaCompleta .product-card-name {
     margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.01em;
+    font-size: 0.98rem;
+    font-weight: 700;
+    letter-spacing: 0.015em;
+    color: rgba(245, 241, 232, 0.96);
 }
 
 #filaropa .product-card-price,
 #ropaCompleta .product-card-price {
     margin-left: auto;
     white-space: nowrap;
-    color: #b794ff;
+    color: #c7adff;
+    font-weight: 700;
+    font-size: 0.94rem;
 }
 
 .armario-modal,
@@ -427,11 +590,12 @@ section {
     max-height: 100vh;
     overflow: auto;
     background:
-        radial-gradient(circle at top, rgba(183, 148, 255, 0.10), transparent 28%),
+        radial-gradient(circle at top left, rgba(183, 148, 255, 0.13), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(109, 40, 217, 0.10), transparent 34%),
         linear-gradient(180deg, #120d18 0%, #09050d 100%);
     border: none;
     border-radius: 0;
-    padding: 32px 32px 36px;
+    padding: 34px 34px 38px;
     box-shadow: none;
 }
 
@@ -443,11 +607,12 @@ section {
     max-height: 100vh;
     overflow: auto;
     background:
-        radial-gradient(circle at top, rgba(183, 148, 255, 0.12), transparent 28%),
+        radial-gradient(circle at top left, rgba(183, 148, 255, 0.13), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(109, 40, 217, 0.10), transparent 34%),
         linear-gradient(180deg, #120d18 0%, #09050d 100%);
     border: none;
     border-radius: 0;
-    padding: 32px 32px 40px;
+    padding: 34px 34px 44px;
     box-shadow: none;
 }
 
@@ -488,11 +653,12 @@ section {
 
 .armario-panel-header {
     position: sticky;
-    top: -32px;
+    top: -34px;
     z-index: 4;
-    margin: -32px -32px 28px;
-    padding: 10px 32px 10px;
-    background: linear-gradient(180deg, rgba(18, 13, 24, 0.98) 0%, rgba(18, 13, 24, 0.90) 100%);
+    margin: -34px -34px 34px;
+    padding: 18px 72px 16px;
+    background:
+        linear-gradient(180deg, rgba(18, 13, 24, 0.98) 0%, rgba(18, 13, 24, 0.90) 100%);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     text-align: center;
@@ -500,7 +666,10 @@ section {
 
 #armarioTitulo {
     margin: 0;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    line-height: 1;
+    letter-spacing: 0.025em;
     text-align: center;
 }
 
@@ -559,46 +728,58 @@ section {
 .armario-grid .product-card,
 #ropaCompleta .product-card {
     background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.03) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+        linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.026) 100%),
+        rgba(8, 6, 12, 0.84);
+    border: 1px solid rgba(255, 255, 255, 0.085);
     border-radius: 26px;
     overflow: hidden;
 }
 
 .armario-grid .product-card:hover,
 #ropaCompleta .product-card:hover {
-    transform: translateY(-8px) scale(1.01);
-    border-color: rgba(183, 148, 255, 0.34);
+    transform: translateY(-7px);
+    border-color: rgba(183, 148, 255, 0.38);
     box-shadow:
-        0 24px 60px rgba(0, 0, 0, 0.42),
-        0 0 22px rgba(183, 148, 255, 0.10);
+        0 24px 56px rgba(0, 0, 0, 0.40),
+        0 0 20px rgba(183, 148, 255, 0.11);
 }
 
 .all-products-grid,
 #ropaCompleta {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 26px;
     align-items: start;
+    max-width: 1220px;
+    margin: 0 auto;
 }
 
 .product-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-    gap: 40px;
-    align-items: start;
-    min-height: calc(100vh - 68px);
+    grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
+    gap: 34px;
+    align-items: stretch;
+    min-height: calc(100vh - 72px);
 }
 
 .product-main-frame {
     position: relative;
-    border-radius: 28px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 30px;
+    overflow: visible;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025)),
+        rgba(5, 3, 8, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.09);
     min-height: 72vh;
     display: grid;
     place-items: center;
+    box-shadow:
+        0 24px 62px rgba(0, 0, 0, 0.36),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+}
+
+.product-main-frame .product-main-image {
+    border-radius: inherit;
 }
 
 .gallery-arrow {
@@ -609,17 +790,22 @@ section {
 }
 
 .gallery-arrow-left {
-    left: 16px;
+    left: -6px;
 }
 
 .gallery-arrow-right {
-    right: 16px;
+    right: -6px;
 }
 
 .product-main-image {
     width: 100%;
     max-height: 72vh;
     object-fit: cover;
+    transition: filter 0.25s ease;
+}
+
+.product-main-frame:hover .product-main-image {
+    filter: contrast(1.03) brightness(1.02);
 }
 
 .thumb-strip {
@@ -633,12 +819,16 @@ section {
     width: 80px;
     height: 80px;
     padding: 0;
-    border: 1px solid var(--line);
+    border: 1px solid rgba(255, 255, 255, 0.09);
     border-radius: 16px;
     overflow: hidden;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.035);
     cursor: pointer;
-    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    transition:
+        transform 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        opacity 0.22s ease;
 }
 
 .thumb-button:hover {
@@ -662,29 +852,277 @@ section {
 }
 
 .product-info {
-    padding: 10px 0 0 28px;
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
     align-self: stretch;
+    padding: 28px;
+    border-left: none;
+    border-radius: 28px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025)),
+        rgba(8, 6, 12, 0.54);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 20px 46px rgba(0, 0, 0, 0.24),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+}
+
+.related-products {
+    margin-top: 34px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+}
+
+.modal-scroll-hint {
+    position: absolute;
+    left: 50%;
+    top: -26px;
+    transform: translateX(-50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+        rgba(8, 6, 12, 0.92);
+    border: 1px solid rgba(183, 148, 255, 0.24);
+    color: rgba(245, 241, 232, 0.9);
+    box-shadow:
+        0 12px 24px rgba(0, 0, 0, 0.28),
+        0 0 16px rgba(183, 148, 255, 0.10);
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.modal-scroll-hint:hover {
+    transform: translateX(-50%) translateY(-2px);
+    border-color: rgba(183, 148, 255, 0.42);
+    background:
+        linear-gradient(180deg, rgba(183, 148, 255, 0.14), rgba(255, 255, 255, 0.04)),
+        rgba(8, 6, 12, 0.94);
+    box-shadow:
+        0 14px 28px rgba(0, 0, 0, 0.34),
+        0 0 20px rgba(183, 148, 255, 0.16);
+}
+
+.modal-scroll-hint span {
+    display: block;
+    font-size: 1.05rem;
+    line-height: 1;
+    transform: translateY(-2px);
+    animation: scrollHintFloat 1.8s ease-in-out infinite;
+}
+
+.related-products-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.related-products-header h4 {
+    margin: 0;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    line-height: 1;
+    color: var(--text);
+}
+
+.related-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+        rgba(8, 6, 12, 0.82);
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    backdrop-filter: blur(10px);
+    box-shadow:
+        0 12px 26px rgba(0, 0, 0, 0.30),
+        0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+    transition:
+        transform 0.24s ease,
+        border-color 0.24s ease,
+        background 0.24s ease,
+        box-shadow 0.24s ease,
+        opacity 0.24s ease;
+}
+
+.related-arrow-left {
+    left: 8px;
+    transform: translateY(-50%);
+}
+
+.related-arrow-right {
+    right: 8px;
+    transform: translateY(-50%);
+}
+
+.related-arrow:hover {
+    border-color: rgba(183, 148, 255, 0.34);
+    background:
+        linear-gradient(180deg, rgba(183, 148, 255, 0.14), rgba(255, 255, 255, 0.04)),
+        rgba(8, 6, 12, 0.88);
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.36),
+        0 0 18px rgba(183, 148, 255, 0.12);
+}
+
+.related-arrow-left:hover {
+    transform: translateY(-50%) translateX(-2px);
+}
+
+.related-arrow-right:hover {
+    transform: translateY(-50%) translateX(2px);
+}
+
+.related-track {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 4px 56px 12px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(183, 148, 255, 0.34) rgba(255, 255, 255, 0.04);
+}
+
+.related-carousel-shell {
+    position: relative;
+}
+
+.related-track::-webkit-scrollbar {
+    height: 8px;
+}
+
+.related-track::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 999px;
+}
+
+.related-track::-webkit-scrollbar-thumb {
+    background: rgba(183, 148, 255, 0.34);
+    border-radius: 999px;
+}
+
+.related-track::-webkit-scrollbar-thumb:hover {
+    background: rgba(183, 148, 255, 0.52);
+}
+
+.related-card {
+    flex: 0 0 190px;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.085);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025)),
+        rgba(8, 6, 12, 0.82);
+    cursor: pointer;
+    box-shadow:
+        0 16px 36px rgba(0, 0, 0, 0.26),
+        0 0 0 1px rgba(255, 255, 255, 0.018) inset;
+    transition:
+        transform 0.28s ease,
+        border-color 0.28s ease,
+        box-shadow 0.28s ease,
+        background 0.28s ease;
+}
+
+.related-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(183, 148, 255, 0.38);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.028)),
+        rgba(8, 6, 12, 0.9);
+    box-shadow:
+        0 22px 46px rgba(0, 0, 0, 0.36),
+        0 0 18px rgba(183, 148, 255, 0.10);
+}
+
+.related-card-media {
+    overflow: hidden;
+}
+
+.related-card-media img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition:
+        transform 0.45s ease,
+        filter 0.45s ease;
+}
+
+.related-card:hover .related-card-media img {
+    transform: scale(1.035);
+    filter: contrast(1.04) brightness(1.03);
+}
+
+.related-card-info {
+    padding: 13px 14px 15px;
+    background:
+        linear-gradient(180deg, rgba(13, 9, 18, 0.94) 0%, rgba(4, 3, 8, 0.98) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.065);
+}
+
+.related-card-name {
+    display: block;
+    margin-bottom: 6px;
+    color: rgba(245, 241, 232, 0.96);
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.related-card-price {
+    display: block;
+    color: #c7adff;
+    font-size: 0.82rem;
+    font-weight: 700;
 }
 
 .product-info #modalTitle {
-    margin: 0 0 14px;
+    margin: 0 0 16px;
 }
 
 .product-info .modal-description {
-    max-width: 44ch;
-    margin-bottom: 18px;
+    max-width: 46ch;
+    margin: 0 0 20px;
+    color: rgba(199, 191, 214, 0.94);
 }
 
 .product-info .modal-price {
-    margin: 0 0 20px;
-    font-size: 1.15rem;
+    margin: 0 0 24px;
+    font-size: 1.28rem;
+    font-weight: 800;
+    color: #c7adff;
+    letter-spacing: 0.02em;
 }
 
 .selector-block {
-    margin-top: 24px;
+    margin-top: 22px;
     padding-top: 18px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.selector-block p {
+    margin: 0;
+    color: rgba(245, 241, 232, 0.9);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
 }
 
 .option-row {
@@ -913,6 +1351,18 @@ body.modal-open {
     }
 }
 
+@keyframes scrollHintFloat {
+    0%, 100% {
+        transform: translateY(-3px);
+        opacity: 0.72;
+    }
+
+    50% {
+        transform: translateY(2px);
+        opacity: 1;
+    }
+}
+
 @media (max-width: 1100px) {
     body {
         background-position: center 52px;
@@ -972,21 +1422,21 @@ body.modal-open {
     .all-products-grid,
     #ropaCompleta {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 20px;
+        gap: 22px;
     }
 
     .armario-panel {
         width: 100vw;
         height: 100vh;
         max-height: 100vh;
-        padding: 24px 24px 28px;
+        padding: 24px 22px 32px;
         border-radius: 0;
     }
 
     .armario-panel-header {
         top: -24px;
-        margin: -24px -24px 20px;
-        padding: 12px 24px 10px;
+        margin: -24px -22px 24px;
+        padding: 14px 64px 12px;
     }
 
     #armarioTitulo {
@@ -994,19 +1444,38 @@ body.modal-open {
     }
 
     .product-panel {
-        padding: 24px 24px 28px;
+        padding: 24px 22px 28px;
     }
 
     .product-layout {
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 22px;
         min-height: auto;
     }
 
+    .product-main-frame {
+        min-height: auto;
+        border-radius: 26px;
+    }
+
+    .product-main-image {
+        max-height: 56vh;
+    }
+
     .product-info {
-        padding: 24px 0 0;
+        padding: 24px;
+        border-radius: 26px;
+    }
+
+    .related-products {
+        margin-top: 30px;
+        padding-top: 26px;
+    }
+
+    .product-info {
+        padding: 24px;
         border-left: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-top: none;
     }
 
     .product-main-frame {
@@ -1081,8 +1550,9 @@ body.modal-open {
     }
 
     .hero-title {
-        font-size: clamp(3.6rem, 16vw, 5.4rem);
-        margin-bottom: 20px;
+        font-size: clamp(3.8rem, 17vw, 5.8rem);
+        margin-bottom: 24px;
+        letter-spacing: 0.045em;
     }
 
     .hero-decor {
@@ -1110,19 +1580,24 @@ body.modal-open {
     }
 
     .carousel-shell {
-        gap: 10px;
+        gap: 8px;
+    }
+
+    .carousel-track,
+    #filaropa {
+        gap: 0;
     }
 
     .carousel-arrow,
     .gallery-arrow {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
+        width: 38px;
+        height: 38px;
+        font-size: 0.95rem;
     }
 
     .product-card {
-        flex: 0 0 86%;
-        min-width: 86%;
+        flex: 0 0 100%;
+        min-width: 100%;
     }
 
     .all-products-grid,
@@ -1131,22 +1606,26 @@ body.modal-open {
         grid-template-columns: 1fr;
     }
 
+    #ropaCompleta {
+        gap: 18px;
+    }
+
     .armario-panel {
         width: 100vw;
         height: 100vh;
         max-height: 100vh;
-        padding: 18px 16px 22px;
+        padding: 18px 14px 24px;
         border-radius: 0;
     }
 
     .armario-panel-header {
         top: -18px;
-        margin: -18px -16px 18px;
-        padding: 10px 16px 9px;
+        margin: -18px -14px 20px;
+        padding: 12px 58px 10px;
     }
 
     #armarioTitulo {
-        font-size: clamp(1.75rem, 8vw, 2.35rem);
+        font-size: clamp(1.8rem, 8vw, 2.45rem);
     }
 
     .armario-close {
@@ -1157,7 +1636,7 @@ body.modal-open {
     }
 
     .product-panel {
-        padding: 18px 16px 22px;
+        padding: 16px 14px 22px;
     }
 
     .modal-close {
@@ -1168,25 +1647,56 @@ body.modal-open {
     }
 
     .product-layout {
-        gap: 18px;
+        gap: 16px;
     }
 
     .product-info {
-        padding: 18px 0 0;
+        padding: 18px;
+        border-radius: 22px;
+    }
+
+    .product-info #modalTitle {
+        margin-bottom: 12px;
+    }
+
+    .product-info .modal-description {
+        margin-bottom: 16px;
+        line-height: 1.6;
+    }
+
+    .product-info .modal-price {
+        margin-bottom: 18px;
+        font-size: 1.15rem;
+    }
+
+    .selector-block {
+        margin-top: 18px;
+        padding-top: 15px;
+    }
+
+    .option-row {
+        gap: 10px;
+        margin-top: 10px;
     }
 
     .product-main-image {
-        max-height: 44vh;
+        max-height: 42vh;
+    }
+
+    .product-main-frame {
+        border-radius: 24px;
     }
 
     .thumb-strip {
-        grid-template-columns: repeat(auto-fill, minmax(64px, 64px));
-        gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(60px, 60px));
+        gap: 9px;
+        margin-top: 14px;
     }
 
     .thumb-button {
-        width: 64px;
-        height: 64px;
+        width: 60px;
+        height: 60px;
+        border-radius: 14px;
     }
 
     .gallery-arrow-left {
@@ -1201,9 +1711,11 @@ body.modal-open {
         position: static;
         top: auto;
         left: auto;
-        margin-top: 24px;
+        margin-top: 22px;
         width: 100%;
         justify-content: center;
+        padding: 14px 20px;
+        font-size: 0.9rem;
     }
 
     .nosotros-section {
@@ -1221,5 +1733,113 @@ body.modal-open {
 
     .contact-value {
         font-size: 1.45rem;
+    }
+
+    .related-products {
+        margin-top: 26px;
+        padding-top: 26px;
+    }
+
+    .modal-scroll-hint {
+        top: -23px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .modal-scroll-hint span {
+        font-size: 1rem;
+    }
+
+    .related-products-header {
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 14px;
+    }
+
+    .related-arrow {
+        width: 34px;
+        height: 34px;
+        font-size: 0.85rem;
+    }
+
+    .related-arrow-left {
+        left: 3px;
+    }
+
+    .related-arrow-right {
+        right: 3px;
+    }
+
+    .related-track {
+        gap: 12px;
+        padding: 4px 42px 10px;
+    }
+
+    .related-card {
+        flex: 0 0 155px;
+        border-radius: 18px;
+    }
+
+    .related-card-info {
+        padding: 12px 12px 14px;
+    }
+
+    .related-card-name {
+        font-size: 0.8rem;
+    }
+
+    .related-card-price {
+        font-size: 0.78rem;
+    }
+
+    .color-button {
+        width: 32px;
+        height: 32px;
+    }
+
+    .size-button {
+        padding: 9px 13px;
+        font-size: 0.88rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-panel {
+        padding: 14px 12px 20px;
+    }
+
+    .product-main-image {
+        max-height: 39vh;
+    }
+
+    .product-info {
+        padding: 16px;
+        border-radius: 20px;
+    }
+
+    .product-info .modal-price {
+        font-size: 1.08rem;
+    }
+
+    .thumb-button {
+        width: 56px;
+        height: 56px;
+    }
+
+    .thumb-strip {
+        grid-template-columns: repeat(auto-fill, minmax(56px, 56px));
+    }
+
+    .related-card {
+        flex: 0 0 145px;
+    }
+
+    .related-products-header h4 {
+        font-size: 1.7rem;
+    }
+
+    .related-track {
+        padding-left: 40px;
+        padding-right: 40px;
     }
 }
